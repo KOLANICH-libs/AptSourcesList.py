@@ -1,0 +1,40 @@
+record <- ?commenter type WS ?options uri WS distribution +component *WS
+component <- WS componentName
+
+type <- 'deb' | 'deb-src'
+
+options <- optionsStart optionsList optionsEnd WS
+optionsList <- option *additionalOption
+additionalOption <- optionsSeparator option
+option <- optionName optionNameValueSeparator optionValue
+optionName <- 'arch' | 'lang' | 'target' | 'pdiffs' | 'by-hash' | 'valid-until-max' | 'allow-downgrade-to-insecure' | 'allow-weak' | 'allow-insecure' | 'trusted' | 'signed-by' | 'check-valid-until' | 'valid-until-min' | 'check-date' | 'inrelease-path' | 'date-max-future'
+
+optionsSeparator <- ','
+
+uri <- cdromURI | genericURI
+
+commenter <- commentMarker ?WS
+
+
+WS <- +[\t\n ]
+allCharsExceptRightSquareBracket <- [!-Z\\^-~]
+nonSpaceString <- +[!-~]
+
+optionsStart <- '['
+optionsEnd <- ']'
+word <- +[a-zA-Z_]
+optionValue <- +[a-zA-Z0-9_/.-]
+optionNameValueSeparator <- '='
+
+commentMarker <- '#'
+genericURI <- *(word '+') word ":" nonSpaceString
+
+cdrom <- 'cdrom'
+cdromSchema <- cdrom ':'
+
+nonSquareBracketString <- +allCharsExceptRightSquareBracket
+enclosedString <- optionsStart ("'" nonSquareBracketString "'" | '"' nonSquareBracketString '"') optionsEnd
+cdromURI <- cdromSchema enclosedString nonSpaceString
+
+distribution <- +[a-zA-Z_-]
+componentName <- +[a-zA-Z_-]

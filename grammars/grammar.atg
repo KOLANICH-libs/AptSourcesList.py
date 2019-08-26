@@ -1,0 +1,50 @@
+COMPILER APT
+
+CHARACTERS
+WS = "\r\n\t ".
+commentMarker = '#'.
+optionsStart = '['.
+optionsEnd = ']'.
+optionNameValueSeparator = '='.
+optionsSeparator = ','.
+
+digit = '0'..'9'.
+letterUpper = 'A' .. 'Z'.
+letterLower = 'a' .. 'z'.
+letter = letterUpper + letterLower + '_'.
+wordAllowedLetters = letter + '-'.
+optionAllowedLetters = wordAllowedLetters + "/.".
+uriSchemaAllowedLetters = letter + '+'.
+allCharsExceptSpaces = ANY - WS.
+allCharsExceptRightSquareBracket = ANY - optionsEnd.
+
+
+
+TOKENS
+number = digit {digit}.
+word = wordAllowedLetters {wordAllowedLetters}.
+optionValue = optionAllowedLetters {optionAllowedLetters}.
+nonSpaceString = allCharsExceptSpaces {allCharsExceptSpaces}.
+
+cdrom = "cdrom".
+distribution = word.
+componentName = word.
+genericURI = uriSchemaAllowedLetters {uriSchemaAllowedLetters} letter ':' nonSpaceString.
+nonSquareBracketString = allCharsExceptRightSquareBracket {allCharsExceptRightSquareBracket}.
+cdromSchema = 'cdrom:'.
+enclosedString = optionsStart ("'" nonSquareBracketString "'" | '"' nonSquareBracketString '"') optionsEnd.
+
+cdromURI = cdromSchema enclosedString nonSpaceString.
+type ="deb" | "deb-src".
+optionName = "arch" | "lang" | "target" | "pdiffs" | "by-hash" | "valid-until-max" | "allow-downgrade-to-insecure" | "allow-weak" | "allow-insecure" | "trusted" | "signed-by" | "check-valid-until" | "valid-until-min" | "check-date" | "inrelease-path" | "date-max-future".
+uri = genericURI | cdromURI.
+
+
+PRODUCTIONS
+record = [commenter] type WS [options] uri WS distribution component {component} {WS}.
+component = WS componentName.
+options = optionsStart optionsList optionsEnd WS.
+optionsList = option {additionalOption}.
+additionalOption = optionsSeparator option.
+option = optionName optionNameValueSeparator optionValue.
+commenter = commentMarker [WS].

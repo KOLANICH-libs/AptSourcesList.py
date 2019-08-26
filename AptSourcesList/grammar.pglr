@@ -1,0 +1,30 @@
+record: commented=commenter? type=type WS options=options? uri=uri WS distribution=distribution components=component+ WS*;
+component: WS id=componentName;
+
+type: "deb" | "deb-src";
+
+options: openingBrace=optionsStart pairs=optionsList closingBrace=optionsEnd WS;
+optionsList: firstOption=option restOptions=additionalOption*;
+additionalOption: separator=optionsSeparator option=option;
+option: key=optionName optionNameValueSeparator value=optionValue;
+optionName: "arch" | "lang" | "target" | "pdiffs" | "by-hash" | "valid-until-max" | "allow-downgrade-to-insecure" | "allow-weak" | "allow-insecure" | "trusted" | "signed-by" | "check-valid-until" | "valid-until-min" | "check-date" | "inrelease-path" | "date-max-future";
+
+optionsSeparator: ",";
+
+uri: genericURI | cdromURI;
+
+commenter: commentMarker WS?;
+
+terminals
+WS: /\s+/;
+optionsStart: "[";
+optionsEnd: "]";
+optionValue: /[\w\/\.-]+/;
+optionNameValueSeparator: "=";
+
+commentMarker: "#";
+genericURI: /(\w+\+)*\w+:[^\s]+/;
+cdromURI: /cdrom:\[(["'])[^\]]+\1\][^\s]+/;
+
+distribution: /[\w-]+/;
+componentName: /[\w-]+/;

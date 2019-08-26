@@ -1,0 +1,28 @@
+{
+	"record": {
+		"commenterR_opt_our": "commented",
+		"TypeR": "rType",
+		"optionsR_opt_our": "options",
+		"uriR": "uri",
+		"wordWithDash": "distribution",
+		"componentsR": "components"
+	},
+	"component": {
+		"wordWithDash": "cId"
+	},
+	"optionsR": {
+		"optionsList": "pairs"
+	},
+	"optionsList": {
+		"optionR": "firstOption",
+		"additionalOptions": "restOptions"
+	},
+	"additionalOption": {
+		"OptionsSeparator": "separator",
+		"optionR": "option"
+	},
+	"optionR": {
+		"OptionName": "key",
+		"optionValue": "value"
+	}
+}

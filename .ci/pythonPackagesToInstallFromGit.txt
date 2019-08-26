@@ -1,0 +1,5 @@
+https://github.com/UniGrammar/UniGrammarRuntimeCore.py
+https://github.com/UniGrammar/UniGrammarRuntime.py
+https://github.com/igordejanovic/parglare.git
+https://github.com/neogeny/TatSu.git
+https://github.com/erikrose/parsimonious.git

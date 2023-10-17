@@ -3,6 +3,9 @@ __all__ = ("parseLine", "parseSourceList")
 import typing
 from pathlib import Path
 import _io
+from warnings import warn
+
+warn("We have moved from M$ GitHub to https://codeberg.org/KFmts/AptSourcesList.py , read why on https://codeberg.org/KOLANICH/Fuck-GuanTEEnomo .")
 
 from UniGrammarRuntime.ParserBundle import ParserBundle
 
